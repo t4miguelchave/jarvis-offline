@@ -1,0 +1,420 @@
+/* ================================
+   JARVIS APP — HOME PAGE STYLES
+   Dark theme, Iron Man aesthetic
+   ================================ */
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ---- HEADER ---- */
+.jarvis-header ion-toolbar {
+  --background: #0a0e1a;
+  --border-color: transparent;
+  padding: 8px 4px;
+  border-bottom: 1px solid rgba(0, 180, 255, 0.2);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 4px;
+}
+
+.jarvis-logo {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid #00b4ff;
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+.logo-j {
+  font-size: 18px;
+  font-weight: 900;
+  color: #00b4ff;
+  font-family: 'Orbitron', sans-serif;
+  z-index: 1;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(90deg, #00b4ff, #0066ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 4px;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #00ff88;
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+.status-text {
+  font-size: 11px;
+  color: #00ff88;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.header-btn {
+  --color: rgba(0, 180, 255, 0.7);
+}
+
+/* ---- CHAT CONTENT ---- */
+.chat-content {
+  --background: #080c18;
+}
+
+/* ---- WELCOME SCREEN ---- */
+.welcome-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px 24px;
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+
+.welcome-logo {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.outer-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 180, 255, 0.4);
+  animation: spin 8s linear infinite;
+}
+
+.inner-ring {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 100, 255, 0.6);
+  animation: spin 4s linear infinite reverse;
+}
+
+.welcome-j {
+  font-size: 42px;
+  font-weight: 900;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(135deg, #00b4ff, #0066ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: 1;
+}
+
+.welcome-screen h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e0eeff;
+  margin: 0 0 10px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.welcome-screen p {
+  font-size: 14px;
+  color: rgba(160, 190, 220, 0.8);
+  max-width: 280px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.quick-btn {
+  background: rgba(0, 180, 255, 0.08);
+  border: 1px solid rgba(0, 180, 255, 0.25);
+  border-radius: 12px;
+  color: #a0c8e8;
+  font-size: 14px;
+  padding: 12px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-btn:active {
+  background: rgba(0, 180, 255, 0.18);
+  transform: scale(0.98);
+}
+
+/* ---- MESSAGES ---- */
+.messages-container {
+  padding: 16px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  animation: slideUp 0.3s ease;
+}
+
+.user-wrapper { flex-direction: row-reverse; }
+.assistant-wrapper { flex-direction: row; }
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00b4ff22, #0044ff44);
+  border: 1px solid rgba(0, 180, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatar span {
+  font-size: 13px;
+  font-weight: 900;
+  color: #00b4ff;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.bubble {
+  max-width: 78%;
+  border-radius: 18px;
+  padding: 10px 14px;
+  position: relative;
+}
+
+.user-bubble {
+  background: linear-gradient(135deg, #0055cc, #0033aa);
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0, 80, 200, 0.4);
+}
+
+.assistant-bubble {
+  background: rgba(16, 24, 48, 0.95);
+  border: 1px solid rgba(0, 180, 255, 0.2);
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.bubble-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #e0eeff;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.bubble-time {
+  display: block;
+  font-size: 10px;
+  color: rgba(160, 190, 220, 0.5);
+  margin-top: 4px;
+  text-align: right;
+}
+
+.message-image {
+  width: 100%;
+  max-width: 220px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.video-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #a0c8e8;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+/* ---- TYPING DOTS ---- */
+.typing-bubble { padding: 14px 18px; }
+
+.typing-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  height: 18px;
+}
+
+.typing-dots span {
+  width: 7px;
+  height: 7px;
+  background: #00b4ff;
+  border-radius: 50%;
+  animation: typing-bounce 1.2s ease-in-out infinite;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ---- FOOTER INPUT ---- */
+.chat-footer {
+  background: #0a0e1a;
+  border-top: 1px solid rgba(0, 180, 255, 0.15);
+  padding: 8px 0 4px;
+}
+
+.input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 4px 12px;
+}
+
+.media-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 180, 255, 0.1);
+  border: 1px solid rgba(0, 180, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.media-btn ion-icon {
+  font-size: 20px;
+  color: #00b4ff;
+}
+
+.media-btn:active {
+  background: rgba(0, 180, 255, 0.25);
+  transform: scale(0.95);
+}
+
+.input-wrapper {
+  flex: 1;
+  background: rgba(16, 24, 48, 0.9);
+  border: 1px solid rgba(0, 180, 255, 0.2);
+  border-radius: 22px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.input-wrapper:focus-within {
+  border-color: rgba(0, 180, 255, 0.6);
+  box-shadow: 0 0 12px rgba(0, 180, 255, 0.15);
+}
+
+.chat-input {
+  --background: transparent;
+  --color: #e0eeff;
+  --placeholder-color: rgba(160, 190, 220, 0.4);
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-size: 15px;
+  max-height: 120px;
+}
+
+.send-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 80, 150, 0.3);
+  border: 1px solid rgba(0, 180, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.send-btn ion-icon {
+  font-size: 20px;
+  color: rgba(0, 180, 255, 0.5);
+}
+
+.send-btn.active {
+  background: linear-gradient(135deg, #0066ff, #00b4ff);
+  border-color: #00b4ff;
+  box-shadow: 0 0 16px rgba(0, 180, 255, 0.5);
+}
+
+.send-btn.active ion-icon {
+  color: #fff;
+}
+
+.send-btn:active { transform: scale(0.92); }
+.send-btn:disabled { opacity: 0.6; }
+
+/* ---- ANIMATIONS ---- */
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 180, 255, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(0, 180, 255, 0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}

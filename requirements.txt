@@ -1,0 +1,8 @@
+groq
+python-dotenv
+fastapi
+uvicorn[standard]
+pillow
+python-multipart
+opencv-python-headless
+numpy

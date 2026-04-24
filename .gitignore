@@ -1,0 +1,22 @@
+# Python
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node / Ionic
+jarvis-app/node_modules/
+jarvis-app/.angular/
+jarvis-app/dist/
+
+# Android build artifacts (keep source, ignore builds)
+jarvis-app/android/.gradle/
+jarvis-app/android/app/build/
+jarvis-app/android/build/
+
+# iOS
+jarvis-app/ios/
+
+# Mac
+.DS_Store
