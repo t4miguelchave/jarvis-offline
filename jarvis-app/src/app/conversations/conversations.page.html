@@ -1,0 +1,95 @@
+<ion-header class="jarvis-header">
+  <ion-toolbar>
+    <div class="header-content">
+      <div class="jarvis-logo">
+        <div class="logo-ring"></div>
+        <span class="logo-j">🕷️</span>
+      </div>
+      <div class="header-text">
+        <h1>PETER</h1>
+        <span class="status-text">Conversas</span>
+      </div>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="openSettings()" class="header-btn">
+        <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="conv-content">
+
+  <!-- 🔔 Notification Card -->
+  <div class="notif-card" *ngIf="activeNotification" [@slideDown]>
+    <div class="notif-header">
+      <div class="notif-app-info">
+        <span class="notif-app-icon">
+          {{ activeNotification.app === 'WhatsApp' ? '💬' : activeNotification.app === 'Telegram' ? '✈️' : '📱' }}
+        </span>
+        <div>
+          <span class="notif-app-name">{{ activeNotification.app }}</span>
+          <span class="notif-sender">{{ activeNotification.title }}</span>
+        </div>
+      </div>
+      <button class="notif-close" (click)="dismissNotification()">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
+
+    <p class="notif-text">"{{ activeNotification.text }}"</p>
+
+    <div class="notif-actions" *ngIf="!suggestedReply && !isGeneratingReply">
+      <button class="notif-btn-reply" (click)="generateReply()">
+        🕷️ Jarvis, responde tu
+      </button>
+    </div>
+
+    <div class="notif-generating" *ngIf="isGeneratingReply">
+      <ion-spinner name="crescent"></ion-spinner>
+      <span>A gerar resposta...</span>
+    </div>
+
+    <div class="notif-reply" *ngIf="suggestedReply && !isGeneratingReply">
+      <p class="notif-reply-label">Sugestão do Jarvis:</p>
+      <p class="notif-reply-text">{{ suggestedReply }}</p>
+      <button class="notif-btn-dismiss" (click)="dismissNotification()">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" *ngIf="conversations.length === 0">
+    <div class="empty-spider">🕷️</div>
+    <h2>Nenhuma conversa</h2>
+    <p>Toca no botão abaixo para começar</p>
+  </div>
+
+  <!-- Conversations list -->
+  <div class="conv-list" *ngIf="conversations.length > 0">
+    <div
+      class="conv-item"
+      *ngFor="let conv of conversations"
+      (click)="openConversation(conv)"
+    >
+      <div class="conv-avatar">🕷️</div>
+      <div class="conv-info">
+        <div class="conv-top">
+          <span class="conv-title">{{ conv.title }}</span>
+          <span class="conv-time">{{ formatDate(conv.updatedAt) }}</span>
+        </div>
+        <span class="conv-preview">{{ conv.preview || 'Sem mensagens' }}</span>
+      </div>
+      <button class="conv-delete" (click)="deleteConversation(conv, $event)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer class="conv-footer">
+  <button class="new-conv-btn" (click)="newConversation()">
+    <ion-icon name="add-outline"></ion-icon>
+    <span>Nova Conversa</span>
+  </button>
+</ion-footer>

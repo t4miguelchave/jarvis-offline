@@ -6,3 +6,6 @@ pillow
 python-multipart
 opencv-python-headless
 numpy
+sqlalchemy
+psycopg2-binary
+python-dateutil

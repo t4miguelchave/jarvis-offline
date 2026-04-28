@@ -1,58 +1,83 @@
 <ion-header class="jarvis-header">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" class="header-btn">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <div class="header-content">
       <div class="jarvis-logo">
         <div class="logo-ring"></div>
-        <span class="logo-j">J</span>
+        <span class="logo-j">🕷️</span>
       </div>
       <div class="header-text">
-        <h1>JARVIS</h1>
+        <h1>{{ conversation?.title || 'PETER' }}</h1>
         <span class="status-dot"></span>
-        <span class="status-text">Online</span>
+        <span class="status-text">Ready, Sir.</span>
       </div>
     </div>
     <ion-buttons slot="end">
       <ion-button (click)="clearChat()" class="header-btn">
         <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
       </ion-button>
-      <ion-button (click)="openSettings()" class="header-btn">
-        <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
-      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content #chatContent class="chat-content">
+  <!-- Welcome screen -->
   <div class="welcome-screen" *ngIf="messages.length === 0 && !isLoading">
     <div class="welcome-logo">
       <div class="outer-ring"></div>
       <div class="inner-ring"></div>
-      <span class="welcome-j">J</span>
+      <span class="spider-icon">🕷️</span>
     </div>
-    <h2>Olá, sou o Jarvis</h2>
-    <p>O teu assistente pessoal com IA. Faz uma pergunta, envia uma foto para calcular calorias, ou analisa um vídeo.</p>
+    <h2>Welcome Sir.</h2>
+    <p class="welcome-subtitle">YOUR A.I. IS ONLINE</p>
+    <p>Faz uma pergunta, envia uma foto de comida para calcular calorias, ou analisa um vídeo.</p>
     <div class="quick-actions">
-      <button class="quick-btn" (click)="inputText='Calorias de uma pizza margherita?'; sendMessage()">🍕 Calorias da pizza</button>
+      <button class="quick-btn" (click)="inputText='Calorias de uma pizza margherita?'; sendMessage()">🍕 Calcular calorias</button>
       <button class="quick-btn" (click)="inputText='Cria um plano de treino para hoje'; sendMessage()">💪 Plano de treino</button>
       <button class="quick-btn" (click)="inputText='Refeição saudável rápida?'; sendMessage()">🥗 Refeição saudável</button>
     </div>
   </div>
 
+  <!-- Messages -->
   <div class="messages-container">
     <div *ngFor="let msg of messages" class="message-wrapper" [class.user-wrapper]="msg.role==='user'" [class.assistant-wrapper]="msg.role==='assistant'">
-      <div class="avatar" *ngIf="msg.role==='assistant'"><span>J</span></div>
+      <div class="avatar" *ngIf="msg.role==='assistant'">🕷️</div>
       <div class="bubble" [class.user-bubble]="msg.role==='user'" [class.assistant-bubble]="msg.role==='assistant'">
         <img *ngIf="msg.imagePreview" [src]="msg.imagePreview" class="message-image" alt="imagem"/>
         <div class="video-indicator" *ngIf="msg.type==='video' && msg.role==='user'">
           <ion-icon name="videocam-outline"></ion-icon><span>Vídeo enviado</span>
         </div>
-        <p class="bubble-text">{{ msg.content }}</p>
+        
+        <!-- User text -->
+        <p class="bubble-text" *ngIf="msg.role==='user'">{{ msg.content }}</p>
+        
+        <!-- Assistant markdown/html -->
+        <div class="bubble-text markdown-body" *ngIf="msg.role==='assistant'" [innerHTML]="msg.htmlContent"></div>
+        
         <span class="bubble-time">{{ formatTime(msg.timestamp) }}</span>
+
+        <!-- Assistant Actions -->
+        <div class="message-actions" *ngIf="msg.role==='assistant'">
+          <button class="action-btn" (click)="copyText(msg.content)">
+            <ion-icon name="copy-outline"></ion-icon> Copiar
+          </button>
+          <button class="action-btn tts-btn" (click)="playAudio(msg.content)">
+            <ion-icon name="volume-high-outline"></ion-icon> Ouvir
+          </button>
+          <button class="action-btn email-btn" *ngIf="msg.isEmail" (click)="openEmailClient(msg.content)">
+            <ion-icon name="mail-outline"></ion-icon> Enviar Email
+          </button>
+        </div>
       </div>
     </div>
 
+    <!-- Typing indicator -->
     <div class="message-wrapper assistant-wrapper" *ngIf="isLoading">
-      <div class="avatar"><span>J</span></div>
+      <div class="avatar">🕷️</div>
       <div class="bubble assistant-bubble typing-bubble">
         <div class="typing-dots"><span></span><span></span><span></span></div>
       </div>
@@ -67,7 +92,7 @@
       <ion-icon name="image-outline"></ion-icon>
     </button>
     <div class="input-wrapper">
-      <ion-textarea [(ngModel)]="inputText" placeholder="Fala com o Jarvis..." [autoGrow]="true" [rows]="1" (keydown)="onKeydown($event)" class="chat-input"></ion-textarea>
+      <ion-textarea [(ngModel)]="inputText" placeholder="Fala comigo, Sir..." [autoGrow]="true" [rows]="1" (keydown)="onKeydown($event)" class="chat-input"></ion-textarea>
     </div>
     <button class="send-btn" (click)="sendMessage()" [class.active]="inputText.trim().length>0" [disabled]="isLoading">
       <ion-icon name="send-outline" *ngIf="!isLoading"></ion-icon>

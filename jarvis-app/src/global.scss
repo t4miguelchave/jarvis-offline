@@ -16,17 +16,17 @@
 /* Force dark mode always */
 @import '@ionic/angular/css/palettes/dark.always.css';
 
-/* ---- GLOBAL VARS ---- */
+/* ---- GLOBAL VARS — SPIDER-MAN THEME ---- */
 :root {
-  --ion-background-color: #080c18;
-  --ion-background-color-rgb: 8, 12, 24;
-  --ion-text-color: #e0eeff;
+  --ion-background-color: #060d1a;
+  --ion-background-color-rgb: 6, 13, 26;
+  --ion-text-color: #f0eaea;
   --ion-font-family: 'Inter', sans-serif;
-  --ion-color-primary: #0066ff;
-  --ion-color-primary-rgb: 0, 102, 255;
+  --ion-color-primary: #E62429;
+  --ion-color-primary-rgb: 230, 36, 41;
   --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-shade: #0055cc;
-  --ion-color-primary-tint: #2280ff;
+  --ion-color-primary-shade: #9e0b10;
+  --ion-color-primary-tint: #ff5555;
   --ion-safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
