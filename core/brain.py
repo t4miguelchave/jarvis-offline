@@ -21,12 +21,21 @@ IMPORTANT RULES FOR YOUR TONE:
 - When analyzing food images, provide quick nutritional info (calories, protein, carbs, fats)."""
 
 
-def ask_jarvis(prompt: str, history: list = [], image_base64: str = None, image_mime: str = "image/jpeg") -> str:
+def ask_jarvis(prompt: str, history: list = None, image_base64: str = None, image_mime: str = "image/jpeg") -> str:
     """Send a prompt to Jarvis and get a response. Supports conversation history and images."""
+    from datetime import datetime
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Injetar a hora atual no prompt do sistema
+    dynamic_system_prompt = f"""{SYSTEM_PROMPT}
+    [CONTEXTO ATUAL DE TEMPO]: A data e hora exatas neste momento são {now}. Lembra-te disto se o utilizador perguntar que horas são ou sobre prazos."""
+
+    if history is None:
+        history = []
 
     if image_base64:
         # Use vision model when image is provided
-        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        messages = [{"role": "system", "content": dynamic_system_prompt}]
         messages.extend(history)
         messages.append({
             "role": "user",
@@ -52,7 +61,7 @@ def ask_jarvis(prompt: str, history: list = [], image_base64: str = None, image_
         )
     else:
         # Text-only conversation
-        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        messages = [{"role": "system", "content": dynamic_system_prompt}]
         messages.extend(history)
         messages.append({"role": "user", "content": prompt})
 

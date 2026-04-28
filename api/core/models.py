@@ -27,3 +27,14 @@ class DBMessage(Base):
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
     conversation = relationship("DBConversation", back_populates="messages")
+
+class DBTask(Base):
+    __tablename__ = "tasks"
+
+    id = Column(String, primary_key=True, index=True)
+    user_id = Column(String, index=True)
+    title = Column(String)
+    is_completed = Column(Boolean, default=False)
+    due_date = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+

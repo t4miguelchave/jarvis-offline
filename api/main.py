@@ -219,3 +219,55 @@ def delete_conversation(session_id: str, db: Session = Depends(get_db)):
     db.query(models.DBConversation).filter(models.DBConversation.id == session_id).delete()
     db.commit()
     return {"status": "deleted"}
+
+# ---- CLOUD TASKS ENDPOINTS ----
+
+class TaskSchema(BaseModel):
+    id: str
+    title: str
+    isCompleted: bool
+    dueDate: Optional[str] = None
+
+@app.get("/cloud/tasks")
+def get_tasks(user_id: str = "miguel_admin", db: Session = Depends(get_db)):
+    tasks = db.query(models.DBTask).filter(models.DBTask.user_id == user_id).all()
+    result = []
+    for t in tasks:
+        result.append({
+            "id": t.id,
+            "title": t.title,
+            "isCompleted": t.is_completed,
+            "dueDate": t.due_date.isoformat() if t.due_date else None
+        })
+    return result
+
+@app.post("/cloud/tasks")
+def add_task(task: TaskSchema, user_id: str = "miguel_admin", db: Session = Depends(get_db)):
+    from dateutil import parser
+    db_task = models.DBTask(
+        id=task.id,
+        user_id=user_id,
+        title=task.title,
+        is_completed=task.isCompleted,
+        due_date=parser.parse(task.dueDate) if task.dueDate else None
+    )
+    db.add(db_task)
+    db.commit()
+    return {"status": "success"}
+
+@app.put("/cloud/tasks/{task_id}")
+def update_task(task_id: str, task: TaskSchema, db: Session = Depends(get_db)):
+    from dateutil import parser
+    db_task = db.query(models.DBTask).filter(models.DBTask.id == task_id).first()
+    if db_task:
+        db_task.title = task.title
+        db_task.is_completed = task.isCompleted
+        db_task.due_date = parser.parse(task.dueDate) if task.dueDate else None
+        db.commit()
+    return {"status": "updated"}
+
+@app.delete("/cloud/tasks/{task_id}")
+def delete_task(task_id: str, db: Session = Depends(get_db)):
+    db.query(models.DBTask).filter(models.DBTask.id == task_id).delete()
+    db.commit()
+    return {"status": "deleted"}
